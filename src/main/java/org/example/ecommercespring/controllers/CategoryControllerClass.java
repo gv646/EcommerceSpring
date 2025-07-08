@@ -3,6 +3,7 @@ package org.example.ecommercespring.controllers;
 import org.example.ecommercespring.dtos.CategoryDTO;
 import org.example.ecommercespring.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class CategoryControllerClass {
     }
 
     @GetMapping
-    public List<CategoryDTO> getAllCategories() throws IOException {
-        return categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() throws IOException {
+        return ResponseEntity.created(null).body(categoryService.getAllCategories());
     }
 
     @GetMapping("/count")
