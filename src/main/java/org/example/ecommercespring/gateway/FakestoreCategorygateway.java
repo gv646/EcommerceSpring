@@ -3,12 +3,13 @@ package org.example.ecommercespring.gateway;
 import org.example.ecommercespring.dtos.CategoryDTO;
 import org.example.ecommercespring.dtos.FakeStoreCategoryResponseDTO;
 import org.example.ecommercespring.gateway.api.FakeStoreCategoryApi;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
-@Component
+@Component("fakeStoreCategoryGateway")
 public class FakestoreCategorygateway implements ICategoryGateway {
 
     private final FakeStoreCategoryApi fakeStoreCategoryApi;
