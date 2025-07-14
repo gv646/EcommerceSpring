@@ -1,5 +1,6 @@
 package org.example.ecommercespring.controllers;
 
+import org.example.ecommercespring.dtos.AllProductsOfCategoryDTO;
 import org.example.ecommercespring.dtos.CategoryDTO;
 import org.example.ecommercespring.services.CategoryService;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,11 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDto) throws IOException {
         return ResponseEntity.ok().body(categoryService.createCategory(categoryDto));
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<AllProductsOfCategoryDTO> getProductsWithinCategory(@PathVariable Long id) throws IOException {
+        AllProductsOfCategoryDTO dto = categoryService.getAllProductsOfCategory(id);
+        return ResponseEntity.ok(dto);
     }
 }
