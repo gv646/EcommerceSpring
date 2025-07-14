@@ -1,15 +1,45 @@
-//package org.example.ecommercespring.services;
-//
-//import org.springframework.stereotype.Component;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//
-//@Service
-//public class CategoryService implements ICategoryService {
-//
-//    @Override
-//    public List<String> getAllCategories() {
-//        return List.of("Categories from ICategoryService Interface implementation");
-//    }
-//}
+package org.example.ecommercespring.services;
+
+import org.example.ecommercespring.dtos.CategoryDTO;
+import org.example.ecommercespring.entity.Category;
+import org.example.ecommercespring.mappers.CategoriesMapper;
+import org.example.ecommercespring.repository.CategoryRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class CategoryService implements ICategoryService {
+
+    private final CategoryRepository categoryRepository;
+
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public List<CategoryDTO> getAllCategories() throws IOException {
+        List<CategoryDTO> result = new ArrayList<>();
+        List<Category> categories = categoryRepository.findAll();
+        for (Category category : categories) {
+            result.add(CategoriesMapper.convertToCategoryDTO(category));
+        }
+        return result;
+    }
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) throws IOException {
+        Category saved = categoryRepository.save(CategoriesMapper.convertToCategoryEntity(categoryDTO));
+        return CategoriesMapper.convertToCategoryDTO(saved);
+    }
+
+    @Override
+    public CategoryDTO getByName(String name) throws IOException {
+        Category category = categoryRepository.findByName(name).orElseThrow(()-> new IOException("Category not found"));
+        return CategoriesMapper.convertToCategoryDTO(category);
+    }
+
+}

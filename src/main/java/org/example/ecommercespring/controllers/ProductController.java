@@ -1,6 +1,7 @@
 package org.example.ecommercespring.controllers;
 
 import org.example.ecommercespring.dtos.ProductDTO;
+import org.example.ecommercespring.dtos.ProductWithCategoryDTO;
 import org.example.ecommercespring.services.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,11 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product) throws Exception {
         return ResponseEntity.ok(productService.createProduct(product));
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<ProductWithCategoryDTO> getProductWithCategory(@PathVariable Long id) throws Exception {
+        ProductWithCategoryDTO dto = productService.getProductWithCategory(id);
+        return ResponseEntity.ok(dto);
     }
 }

@@ -1,6 +1,8 @@
 package org.example.ecommercespring.mappers;
 
 import org.example.ecommercespring.dtos.ProductDTO;
+import org.example.ecommercespring.dtos.ProductWithCategoryDTO;
+import org.example.ecommercespring.entity.Category;
 import org.example.ecommercespring.entity.Product;
 
 public class ProductMapper {
@@ -14,13 +16,13 @@ public class ProductMapper {
                 .discount(product.getDiscount())
                 .model(product.getModel())
                 .title(product.getTitle())
-                .category(product.getCategory())
+                .categoryId(product.getCategory().getId())
                 .brand(product.getBrand())
                 .popular(product.isPopular())
                 .build();
     }
 
-    public static Product convertToProduct(ProductDTO productDTO) {
+    public static Product convertToProductEntity(ProductDTO productDTO, Category category) {
 
         return Product.builder()
                 .image(productDTO.getImage())
@@ -30,10 +32,26 @@ public class ProductMapper {
                 .discount(productDTO.getDiscount())
                 .model(productDTO.getModel())
                 .title(productDTO.getTitle())
-                .category(productDTO.getCategory())
+                .category(category)
                 .brand(productDTO.getBrand())
                 .popular(productDTO.isPopular())
                 .build();
 
+    }
+
+    public static ProductWithCategoryDTO convertToProductWithCategoryDTO(Product product) {
+        return ProductWithCategoryDTO.builder()
+                .id(product.getId())
+                .image(product.getImage())
+                .color(product.getColor())
+                .price(product.getPrice())
+                .description(product.getDescription())
+                .discount(product.getDiscount())
+                .model(product.getModel())
+                .title(product.getTitle())
+                .brand(product.getBrand())
+                .popular(product.isPopular())
+                .category(CategoriesMapper.convertToCategoryDTO(product.getCategory()))
+                .build();
     }
 }
