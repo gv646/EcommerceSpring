@@ -1,5 +1,6 @@
 package org.example.ecommercespring.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.ecommercespring.dtos.ProductDTO;
 import org.example.ecommercespring.dtos.ProductWithCategoryDTO;
 import org.example.ecommercespring.services.IProductService;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/products")
+@Tag(name = "Product Management", description = "APIs for managing products")
 public class ProductController {
 
     private final IProductService productService;
